@@ -4,8 +4,9 @@
 
 <h2>Create Student</h2>
 
-<form action="{{ route('students.store') }}" method="POST">
-
+<form action={{ route('students.store') }}
+     method="POST"
+     enctype="multipart/form-data">
     @csrf
 
     @include('admin.students.form')

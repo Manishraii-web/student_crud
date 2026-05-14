@@ -7,7 +7,7 @@
 </head>
 <body>
 
-    <h1>Laravel Student CRUD</h1>
+    <h1> Student CRUD Demo Project....</h1>
 
     <hr>
 

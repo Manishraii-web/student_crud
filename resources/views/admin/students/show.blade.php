@@ -22,6 +22,22 @@
 <p>
     <strong>Address:</strong>
     {{ $student->address }}
+
+</p>
+
+<p>
+    <strong>Created At:</strong>
+    {{ $student->created_at }}
+</p>
+
+<p>
+    <strong>Image:</strong>
+    <br>
+    @if ($student->image)
+        <img src="{{ asset('students/' . $student->image) }}" alt="Student Image" width="200">
+    @else
+        No image available.
+    @endif
 </p>
 
 @endsection

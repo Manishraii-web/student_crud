@@ -59,3 +59,18 @@
 </div>
 
 <br>
+
+<div>
+
+    <label>Photo</label>
+
+    <br>
+
+    <input
+        type="file"
+        name="image"
+    >
+
+</div>
+
+<br>

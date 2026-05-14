@@ -3,32 +3,58 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $students = Student::when($request->search, function ($query) use ($request){
+            $query->where('name', 'like', '%' .$request->search .'%');
+            // -> orwhere('email', 'like','%'.$request->search .'%')
+            // ->orwhere('phone','like','%' .$request->search .'%');
+
+        })
+        ->latest()
+        ->paginate(10);
+        return view('admin.students.index', compact('students'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('admin.students.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+         $data  = $request->only([
+
+                'name',
+                'email',
+                'phone',
+                'address',
+
+            ]);
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+
+            $image->move(public_path('students'), $imageName);
+
+            $data['image'] = $imageName;
+        }
+          Student::create($data);
+
+        return redirect()
+            ->route('students.index')
+            ->with('success', 'Stuent is created successfully!!!');
     }
 
     /**
@@ -36,23 +62,45 @@ class StudentController extends Controller
      */
     public function show(string $id)
     {
-        //
+
+        $student = Student::findorFail($id);
+
+        return view("admin.students.show", compact('student'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function edit(String $id)
     {
-        //
+        $student = Student::findorFail($id);
+        return view('admin.students.edit', compact('student'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        //
+        $student = Student::findOrFail($id);
+
+        $data = $request->only([
+            'name',
+            'email',
+            'phone',
+            'address',
+        ]);
+
+        if ($request->hasFile('image')) {
+
+            $image = $request->file('image');
+
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+
+            $image->move(public_path('students'), $imageName);
+
+            $data['image'] = $imageName;
+        }
+
+        $student->update($data);
+
+        return redirect()
+            ->route('students.index')
+            ->with('success', 'Student updated successfully!');
     }
 
     /**
@@ -60,6 +108,12 @@ class StudentController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $student = Student::findOrFail($id);
+
+        $student->delete();
+
+        return redirect()
+            ->route('students.index')
+            ->with('success', 'Student deleted successfully!');
     }
 }

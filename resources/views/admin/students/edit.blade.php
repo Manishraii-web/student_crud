@@ -4,7 +4,7 @@
 
 <h2>Edit Student</h2>
 
-<form action="{{ route('students.update', $student->id) }}" method="POST">
+<form action="{{ route('students.update', $student->id) }}" method="POST" enctype="multipart/form-data">
 
     @csrf
     @method('PUT')
