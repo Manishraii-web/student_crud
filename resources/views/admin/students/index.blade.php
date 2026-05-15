@@ -82,12 +82,23 @@
 
                     </form>
 
+
                 </td>
 
             </tr>
         @endforeach
 
     </table>
+
+     <form action="{{ route('logout') }}" method="POST">
+
+    @csrf
+
+    <button type="submit">
+        Logout
+    </button>
+
+</form>
 
     {{ $students->links() }}
 @endsection

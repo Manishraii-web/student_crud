@@ -22,7 +22,7 @@ class StudentService
 
             })
             ->orderBy('created_at', 'asc')
-            ->paginate(1);
+            ->paginate(5);
     }
     // ------------------------------------------------------------------------------
 
