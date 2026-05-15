@@ -11,20 +11,15 @@
 
     <form method="GET" action="{{ route('students.index') }}">
 
-    <input
-        type="text"
-        name="search"
-        placeholder="Search student..."
-        value="{{ request('search') }}"
-    >
+        <input type="text" name="search" placeholder="Search student..." value="{{ request('search') }}">
 
-    <button type="submit">
-        Search
-    </button>
+        <button type="submit">
+            Search
+        </button>
 
-</form>
+    </form>
 
-<br>
+    <br>
     <table border="1" cellpadding="10">
 
         <tr>
@@ -55,42 +50,44 @@
                 <td>{{ $student->created_at }}</td>
 
                 <td>
+
                     @if ($student->image)
-                        <img src="{{ asset('students/' . $student->image) }}" width="80">
+                        <img src="{{ asset('student-images/' . $student->image) }}" width="80">
+                    @else
+                        No Image
                     @endif
+
                 </td>
                 <td>
                     <a href="{{ route('students.show', $student->id) }}">
+                        Show
+                    </a>
 
+                    |
 
-                        |
+                    <a href="{{ route('students.edit', $student->id) }}">
+                        Edit
+                    </a>
 
-                        <a href="{{ route('students.edit', $student->id) }}">
-                            Edit
-                        </a>
+                    |
 
-                        |
+                    <form action="{{ route('students.destroy', $student->id) }}" method="POST" style="display:inline;">
 
-                        <form action="{{ route('students.destroy', $student->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
 
-                            @csrf
-                            @method('DELETE')
+                        <button type="submit">
+                            Delete
+                        </button>
 
-                            <button type="submit">
-                                Delete
-                            </button>
-
-                        </form>
+                    </form>
 
                 </td>
 
             </tr>
-
-
         @endforeach
 
     </table>
 
- {{ $students->links() }}
-
+    {{ $students->links() }}
 @endsection

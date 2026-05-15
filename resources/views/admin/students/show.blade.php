@@ -34,7 +34,7 @@
     <strong>Image:</strong>
     <br>
     @if ($student->image)
-        <img src="{{ asset('students/' . $student->image) }}" alt="Student Image" width="200">
+        <img src="{{ asset('students-images/' . $student->image) }}" alt="Student Image" width="200">
     @else
         No image available.
     @endif

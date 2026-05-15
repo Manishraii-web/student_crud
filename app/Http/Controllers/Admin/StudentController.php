@@ -6,13 +6,13 @@ use App\Services\StudentService;
 use App\Http\Controllers\Controller;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use App\Http\Requests\StudentRequest;
+
 
 class StudentController extends Controller
 {
 
-    public function __construct(protected StudentService $studentService)
-    {
-    }
+    public function __construct(protected StudentService $studentService) {}
     //---------------------------------------------------------------------
 
     public function index(Request $request)
@@ -27,10 +27,12 @@ class StudentController extends Controller
     }
     // ------------------------------------------------------------------
 
-    public function store(Request $request)
+    public function store(StudentRequest $request)
     {
-
-     $this->studentService->storeStudents($request);
+        $this->studentService->storeStudents(
+            $request->all(),
+            $request->file('image')
+        );
         return redirect()
             ->route('students.index')
             ->with('success', 'Stuent is created successfully!!!');
@@ -65,7 +67,7 @@ class StudentController extends Controller
 
     public function destroy(string $id)
     {
-       $this->studentService->deleteStudent($id);
+        $this->studentService->deleteStudent($id);
 
         return redirect()
             ->route('students.index')

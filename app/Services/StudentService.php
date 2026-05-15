@@ -26,24 +26,18 @@ class StudentService
     }
     // ------------------------------------------------------------------------------
 
-    public function storeStudents($request)
+    public function storeStudents($data, $image= null)
     {
-        $data = $request->only([
-            'name',
-            'email',
-            'phone',
-            'address',
-        ]);
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('students'), ($imageName));
-            $data['image'] = $imageName;
+        if($image) {
+           $imageName = time() . '.' . $image->getClientOriginalExtension();
+           $image->move(public_path('students-images'), $imageName);
+           $data['image'] = $imageName;
         }
         return $this->student->create($data);
     }
 
     //--------------------------------------------------------------------------
+
 
     public function find($id)
     {
@@ -51,19 +45,14 @@ class StudentService
     }
 
     //---------------------------------------------------------------------------
-    public function updateStudent($request, string $id)
+    public function updateStudent($data, string $id)
     {
         $student = $this->find($id);
-        $data = $request->only([
-            'name',
-            'email',
-            'phone',
-            'address',
-        ]);
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
+
+        if ($data->hasFile('image')) {
+            $image = $data->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('students'), $imageName);
+            $image->move(public_path('students-images'), $imageName);
             $data['image'] = $imageName;
         }
 
