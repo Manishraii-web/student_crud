@@ -33,6 +33,7 @@ class StudentRequest extends FormRequest
             'phone' => "required|string|max:20",
             'address' => "required|string|max:255",
             'image' => "nullable|image|mimes:jpeg,png,jpg,gif|max:2048"
+            
         ];
     }
 }

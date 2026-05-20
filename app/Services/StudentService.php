@@ -22,7 +22,7 @@ class StudentService
 
             })
             ->orderBy('created_at', 'asc')
-            ->paginate(5);
+            ->paginate(4);
     }
     // ------------------------------------------------------------------------------
 
@@ -45,19 +45,22 @@ class StudentService
     }
 
     //---------------------------------------------------------------------------
-    public function updateStudent($data, string $id)
+    public function updateStudent($request, string $id)
     {
         $student = $this->find($id);
+        $data = $request->all();
 
-        if ($data->hasFile('image')) {
-            $image = $data->file('image');
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('students-images'), $imageName);
-            $data['image'] = $imageName;
-        }
+            $image->move(public_path('student-images'), $imageName);
 
-        return $student->update($data);
+
+                    $data['image'] = $imageName;
+
     }
+     return $student->update($data);
+}
     //-----------------------------------------------------------------------
 
     public function deleteStudent( string $id)

@@ -6,8 +6,6 @@ use App\Http\Controllers\Auth\LoginController;
 
 
 
-
-
 Route::get('/', function () {
     return redirect()->route('students.index');
 });
@@ -26,8 +24,7 @@ Route::put('students/{id}', [StudentController::class, 'update'])->name('student
 Route::delete('students/{id}', [StudentController::class, 'destroy'])->name('students.destroy');
 Route::middleware(['auth', 'admin'])->group(function () {
 
-Route::middleware('auth')->group(function () {
-
+Route::middleware('admin')->group(function () {
     Route::resource('students', StudentController::class);
 
 });
