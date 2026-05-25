@@ -21,7 +21,7 @@ class LoginController extends Controller
     {
         $credentials = $request->only(
             'email',
-            'password'
+            'password',
         );
 
         if ($this->adminService->login($credentials)) {
