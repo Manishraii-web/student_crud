@@ -6,7 +6,7 @@ use App\Services\StudentService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\StudentRequest;
-
+use App\Http\Resources\StudentResource;
 
 class StudentController extends Controller
 {
@@ -17,7 +17,8 @@ class StudentController extends Controller
     public function index(Request $request)
     {
         $students = $this->studentService->getStudents($request);
-        return view('admin.students.index', compact('students'));
+        // return view('admin.students.index', compact('students'));
+        return StudentResource::collection($students);
     }
     // ------------------------------------------------------------------
     public function create()
