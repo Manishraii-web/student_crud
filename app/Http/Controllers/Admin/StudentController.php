@@ -17,8 +17,8 @@ class StudentController extends Controller
     public function index(Request $request)
     {
         $students = $this->studentService->getStudents($request);
-        // return view('admin.students.index', compact('students'));
-        return StudentResource::collection($students);
+        return view('admin.students.index', compact('students'));
+        // return StudentResource::collection($students);
     }
     // ------------------------------------------------------------------
     public function create()
