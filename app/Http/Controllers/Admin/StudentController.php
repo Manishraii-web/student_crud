@@ -41,21 +41,21 @@ class StudentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
         $student = $this->studentService->find($id);
         return view("admin.students.show", compact('student'));
     }
     //-------------------------------------------------------------------------
 
-    public function edit(String $id)
+    public function edit($id)
     {
         $student = $this->studentService->find($id);
         return view('admin.students.edit', compact('student'));
     }
 
     //---------------------------------------------------------------------
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
         $this->studentService->updateStudent($request, $id);
 
@@ -65,7 +65,7 @@ class StudentController extends Controller
     }
     //----------------------------------------------------------------
 
-    public function destroy(string $id)
+    public function destroy( $id)
     {
         $this->studentService->deleteStudent($id);
 
