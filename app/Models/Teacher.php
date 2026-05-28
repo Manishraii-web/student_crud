@@ -5,21 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Student extends Model
-
+class Teacher extends Model
 {
-
     use SoftDeletes;
-
 
     protected $fillable = [
         'name',
         'email',
         'phone',
-        'address',
-        'image',
+        'password',
+        'subject'
     ];
-    public function attendance() {
+
+    protected $hidden = [
+        'password',
+    ];
+
+    public function attendance(){
         return $this->hasMany(Attendance::class);
     }
 }
