@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\StudentController;
+use App\Http\Controllers\Attendance\AttendanceController;
 use App\Http\Controllers\Auth\LoginController;
 
 
@@ -31,6 +32,9 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 // });
 
 // });
+
+Route::resource('attendance', AttendanceController::class
+);
 
 Route::middleware('admin.auth')->group(function() {
 Route::resource('students', StudentController::class);
