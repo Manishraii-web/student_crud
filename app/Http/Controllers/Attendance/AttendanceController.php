@@ -34,9 +34,19 @@ class AttendanceController extends Controller
         return view('attendance.edit', compact('attendance'));
     }
 
+    public function show($id){
+        $attendance = $this->attendanceService->find($id);
+        return view('attendance.show', compact('attendance'));
+    }
+
     public function update(UpdateAttendanceRequest $request, $id){
         $this->attendanceService->update($id, $request->validated());
         return redirect()->route('attendance.index')->with('success','Updated Successfull');
+    }
+
+    public function destroy($id){
+        $this->attendanceService->delete($id);
+        return redirect()->route('attendance.index')->with('success', 'Deleted Successfully');
     }
 
 }

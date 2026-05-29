@@ -5,6 +5,20 @@
 
 <h2>Mark Attendance</h2>
 
+@if ($students->isEmpty())
+    <p style="color:red;">Please add a student before marking attendance.</p>
+@endif
+
+@if ($errors->any())
+    <div style="color:red;">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
 <form
     method="POST"
     action="{{ route('attendance.store') }}"
@@ -18,11 +32,16 @@
 
 <br>
 
-<select name="student_id">
+<select name="student_id" required>
+
+    <option value="">Select Student</option>
 
     @foreach ($students as $student)
 
-        <option value="{{ $student->id }}">
+        <option
+            value="{{ $student->id }}"
+            {{ old('student_id') == $student->id ? 'selected' : '' }}
+        >
             {{ $student->name }}
         </option>
 
@@ -40,9 +59,14 @@
 
 <select name="teacher_id">
 
+    <option value="">No Teacher</option>
+
     @foreach ($teachers as $teacher)
 
-        <option value="{{ $teacher->id }}">
+        <option
+            value="{{ $teacher->id }}"
+            {{ old('teacher_id') == $teacher->id ? 'selected' : '' }}
+        >
             {{ $teacher->name }}
         </option>
 
@@ -58,17 +82,26 @@
 
 <br>
 
-<select name="status">
+<select name="status" required>
 
-    <option value="present">
+    <option
+        value="present"
+        {{ old('status') == 'present' ? 'selected' : '' }}
+    >
         Present
     </option>
 
-    <option value="absent">
+    <option
+        value="absent"
+        {{ old('status') == 'absent' ? 'selected' : '' }}
+    >
         Absent
     </option>
 
-    <option value="leave">
+    <option
+        value="leave"
+        {{ old('status') == 'leave' ? 'selected' : '' }}
+    >
         Leave
     </option>
 
@@ -85,6 +118,8 @@
 <input
     type="date"
     name="date"
+    value="{{ old('date') }}"
+    required
 >
 
 <br><br>

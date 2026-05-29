@@ -12,7 +12,7 @@ class UpdateAttendanceRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,7 +23,8 @@ class UpdateAttendanceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'status' => 'required|in:present,absent,leave',
+            'date' => 'required|date',
         ];
     }
 }

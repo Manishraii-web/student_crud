@@ -11,7 +11,6 @@
     action="{{ route('attendance.update', $attendance->id) }}"
 >
 
-```
 @csrf
 @method('PUT')
 
@@ -65,7 +64,6 @@
 <button type="submit">
     Update Attendance
 </button>
-```
 
 </form>
 

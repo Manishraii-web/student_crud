@@ -14,7 +14,6 @@
 
 <table border="1" cellpadding="10">
 
-```
 <tr>
 
     <th>ID</th>
@@ -39,7 +38,7 @@
 
         <td>{{ $attendance->student->name }}</td>
 
-        <td>{{ $attendance->teacher->name }}</td>
+        <td>{{ $attendance->teacher?->name ?? 'Admin' }}</td>
 
         <td>{{ $attendance->status }}</td>
 
@@ -73,7 +72,6 @@
     </tr>
 
 @endforeach
-```
 
 </table>
 

@@ -8,7 +8,6 @@
 
 <table border="1" cellpadding="10">
 
-```
 <tr>
     <th>ID</th>
     <td>{{ $attendance->id }}</td>
@@ -21,7 +20,7 @@
 
 <tr>
     <th>Teacher Name</th>
-    <td>{{ $attendance->teacher->name }}</td>
+    <td>{{ $attendance->teacher?->name ?? 'Admin' }}</td>
 </tr>
 
 <tr>
@@ -38,7 +37,6 @@
     <th>Created At</th>
     <td>{{ $attendance->created_at }}</td>
 </tr>
-```
 
 </table>
 
