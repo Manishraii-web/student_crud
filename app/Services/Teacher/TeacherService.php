@@ -64,7 +64,7 @@ class TeacherService
                 ->where('role', 'teacher')
                 ->delete();
 
-            return $teacher->delete();
+            return $teacher->forceDelete();
         });
 
     }

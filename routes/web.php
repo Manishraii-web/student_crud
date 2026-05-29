@@ -40,11 +40,10 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 
 Route::middleware('admin.auth')->group(function() {
-
-    Route::resource('attendance', AttendanceController::class);
-Route::resource('students', StudentController::class);
+    Route::resource('teacher', TeacherController::class);
 });
 
-Route::middleware('teacher')->group(function(){
-  Route::resource('teacher',TeacherController::class);
+Route::middleware('teacher')->group(function() {
+    Route::resource('attendance', AttendanceController::class);
+    Route::resource('students', StudentController::class);
 });

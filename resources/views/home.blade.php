@@ -12,11 +12,14 @@
 
 <br><br>
 
-<a href="{{ route('teacher.index') }}">
-    Manage Teachers
-</a>
+@if (auth()->check() && auth()->user()->role === 'admin')
+    <a href="{{ route('teacher.index') }}">
+        Manage Teachers
+    </a>
 
-<br><br>
+    <br><br>
+@endif
+
 
 <a href="{{ route('attendance.index') }}">
     Manage Attendance
