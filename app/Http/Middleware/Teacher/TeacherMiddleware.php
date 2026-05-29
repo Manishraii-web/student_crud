@@ -19,8 +19,9 @@ class TeacherMiddleware
         if(!Auth::check()){
             return redirect()->route('teacher.login');
         }
-        if(Auth::user()->role !='admin' || 'teacher'){
-            die("Access Denied");
+        if(Auth::user()->role !='admin' &&
+           Auth::user()->role !='teacher'){
+            abort(403, 'Unauthorized');
         }
         return $next($request);
     }

@@ -19,7 +19,7 @@ class AdminMiddleware
        if(!Auth::check()){
         return redirect()->route('login');
        } if(Auth::user()->role != 'admin'){
-        die('Error');
+        return redirect()->route('login');
        }
       return $next($request);
     }

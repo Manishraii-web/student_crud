@@ -18,7 +18,10 @@ class AttendanceController extends Controller
     }
     public function create(){
         $data = $this->attendanceService->create();
-        return view('attendance.create', compact('students','teachers'));
+        return view('attendance.create', [
+            'students' => $data['students'],
+            'teachers'=> $data['teachers'],
+        ]);
     }
 
     public function store(StoreAttendanceRequest $request){
@@ -27,8 +30,8 @@ class AttendanceController extends Controller
     }
 
     public function edit($id){
-    $attendance = $this->attendanceService->find($id);
-    return view('attendance.edit', compact('attendances'));
+        $attendance = $this->attendanceService->find($id);
+        return view('attendance.edit', compact('attendance'));
     }
 
     public function update(UpdateAttendanceRequest $request, $id){

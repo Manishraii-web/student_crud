@@ -10,7 +10,6 @@
     action="{{ route('attendance.store') }}"
 >
 
-```
 @csrf
 
 <label>
@@ -93,7 +92,6 @@
 <button type="submit">
     Save Attendance
 </button>
-```
 
 </form>
 

@@ -7,7 +7,7 @@ use App\Models\Student;
 use App\Models\Teacher;
 
 class AttendanceService{
-   
+
     public function __construct(protected Attendance $attendance) {}
 
     public function getAll(){
@@ -16,8 +16,8 @@ class AttendanceService{
 
     public function create(){
         return [
-        $students = Student::all(),
-        $teachers = Teacher::all()
+            'students' => Student::all(),
+            'teachers' => Teacher::all(),
         ];
     }
 
