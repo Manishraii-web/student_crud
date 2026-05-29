@@ -2,6 +2,8 @@
 
 namespace App\Services\Teacher;
 use App\Models\Teacher;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class TeacherService
@@ -20,17 +22,50 @@ class TeacherService
     }
 
     public function store(array $data){
-        $data['password'] =Hash::make($data['password']);
-        return $this->teacher->create($data);
+        return DB::transaction(function () use ($data) {
+            $data['password'] = Hash::make($data['password']);
+
+            $teacher = $this->teacher->create($data);
+
+            User::create([
+                'name' => $teacher->name,
+                'email' => $teacher->email,
+                'password' => $data['password'],
+                'role' => 'teacher',
+            ]);
+
+            return $teacher;
+        });
     }
 
     public function update($id, array $data){
         $teacher = $this->teacher->findOrFail($id);
-        return $teacher->update($data);
+        $oldEmail = $teacher->email;
+
+        return DB::transaction(function () use ($teacher, $oldEmail, $data) {
+            $updated = $teacher->update($data);
+
+            User::where('email', $oldEmail)
+                ->where('role', 'teacher')
+                ->update([
+                    'name' => $teacher->name,
+                    'email' => $teacher->email,
+                ]);
+
+            return $updated;
+        });
     }
 
     public function delete($id){
-      return  $this->teacher->findOrFail($id)->delete();
+        $teacher = $this->teacher->findOrFail($id);
+
+        return DB::transaction(function () use ($teacher) {
+            User::where('email', $teacher->email)
+                ->where('role', 'teacher')
+                ->delete();
+
+            return $teacher->delete();
+        });
 
     }
 
