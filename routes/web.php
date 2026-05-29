@@ -2,15 +2,20 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\StudentController;
+use App\Http\Controllers\Teacher\TeacherController;
 use App\Http\Controllers\Attendance\AttendanceController;
 use App\Http\Controllers\Auth\LoginController;
 
 
 
 Route::get('/', function () {
-    return redirect()->route('students.index');
+    return redirect()->route('home');
 });
+Route::get('/home', function () {
 
+    return view('home');
+
+})->name('home');
 
 Route::get('login', [LoginController::class, 'showLogin'])->name('login');
 Route::post('login', [LoginController::class, 'login'])->name('login.submit');
@@ -33,9 +38,13 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 // });
 
-Route::resource('attendance', AttendanceController::class
-);
 
 Route::middleware('admin.auth')->group(function() {
+
+    Route::resource('attendance', AttendanceController::class);
 Route::resource('students', StudentController::class);
+});
+
+Route::middleware('teacher')->group(function(){
+  Route::resource('teacher',TeacherController::class);
 });

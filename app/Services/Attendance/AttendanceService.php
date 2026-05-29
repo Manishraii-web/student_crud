@@ -7,9 +7,7 @@ use App\Models\Student;
 use App\Models\Teacher;
 
 class AttendanceService{
-    /**
-     * Create a new class instance.
-     */
+   
     public function __construct(protected Attendance $attendance) {}
 
     public function getAll(){
