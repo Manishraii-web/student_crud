@@ -11,7 +11,6 @@
     action="{{ route('teacher.update', $teacher->id) }}"
 >
 
-```
 @csrf
 @method('PUT')
 
@@ -22,7 +21,7 @@
 <input
     type="text"
     name="name"
-    value="{{ $teacher->name }}"
+    value="{{ old('name', $teacher->name) }}"
 >
 
 <br><br>
@@ -34,7 +33,7 @@
 <input
     type="email"
     name="email"
-    value="{{ $teacher->email }}"
+    value="{{ old('email', $teacher->email) }}"
 >
 
 <br><br>
@@ -46,7 +45,7 @@
 <input
     type="text"
     name="phone"
-    value="{{ $teacher->phone }}"
+    value="{{ old('phone', $teacher->phone) }}"
 >
 
 <br><br>
@@ -58,7 +57,7 @@
 <input
     type="text"
     name="subject"
-    value="{{ $teacher->subject }}"
+    value="{{ old('subject', $teacher->subject) }}"
 >
 
 <br><br>
@@ -66,7 +65,6 @@
 <button type="submit">
     Update Teacher
 </button>
-```
 
 </form>
 

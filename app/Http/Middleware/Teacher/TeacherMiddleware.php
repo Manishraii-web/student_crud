@@ -17,7 +17,7 @@ class TeacherMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if(!Auth::check()){
-            return redirect()->route('teacher.login');
+            return redirect()->route('login');
         }
         if(Auth::user()->role !='admin' &&
            Auth::user()->role !='teacher'){

@@ -25,27 +25,26 @@ class TeacherController extends Controller
     public function store(StoreTeacherRequest $request)  {
        $this->teacherService->store($request->validated());
 
-       return redirect()->route('teacher.index')->with('success',"Teacher succesfully");
+       return redirect()->route('teacher.index')->with('success',"Teacher created successfully");
     }
 
        public function show($id)  {
         $teacher = $this->teacherService->find($id);
-       return view('teachers.show');
+       return view('teacher.show', compact('teacher'));
     }
 
 
     public function edit($id)
     {
         $teacher =  $this->teacherService->find($id);
-       $attendance = $this->attendanceService->getAll();
-       return view('student.edit', compact('student','attendance'));
+       return view('teacher.edit', compact('teacher'));
     }
 
 
     public function update(UpdateTeacherRequest $request, string $id)
     {
      $this->teacherService->update($id, $request->validated());
-     return redirect()->route('teacher.index')->with('success','Congrates Teacher You are logged in......');
+     return redirect()->route('teacher.index')->with('success','Teacher updated successfully');
     }
 
 

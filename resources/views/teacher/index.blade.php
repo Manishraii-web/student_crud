@@ -1,3 +1,15 @@
+@extends('layouts.app')
+
+@section('content')
+
+<h2>Teacher List</h2>
+
+<a href="{{ route('teacher.create') }}">
+    Add Teacher
+</a>
+
+<br><br>
+
 <table border="1" cellpadding="10">
 
     <tr>
@@ -67,3 +79,5 @@
     @endforeach
 
 </table>
+
+@endsection

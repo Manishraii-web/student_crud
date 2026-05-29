@@ -11,7 +11,6 @@
     action="{{ route('teacher.store') }}"
 >
 
-```
 @csrf
 
 <label>Name</label>
@@ -21,6 +20,7 @@
 <input
     type="text"
     name="name"
+    value="{{ old('name') }}"
 >
 
 <br><br>
@@ -32,6 +32,7 @@
 <input
     type="email"
     name="email"
+    value="{{ old('email') }}"
 >
 
 <br><br>
@@ -43,6 +44,7 @@
 <input
     type="text"
     name="phone"
+    value="{{ old('phone') }}"
 >
 
 <br><br>
@@ -54,6 +56,7 @@
 <input
     type="text"
     name="subject"
+    value="{{ old('subject') }}"
 >
 
 <br><br>
@@ -72,7 +75,6 @@
 <button type="submit">
     Save Teacher
 </button>
-```
 
 </form>
 

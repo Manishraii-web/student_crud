@@ -4,6 +4,7 @@ namespace App\Http\Requests\Teacher;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateTeacherRequest extends FormRequest
 {
@@ -24,7 +25,11 @@ class UpdateTeacherRequest extends FormRequest
     {
         return [
            'name'=> 'required|string|max:50',
-            'email'=> 'required|email',
+            'email'=> [
+                'required',
+                'email',
+                Rule::unique('teachers', 'email')->ignore($this->route('teacher')),
+            ],
             'phone' => 'required|string|max:13',
             'subject' => 'required|string'
         ];
