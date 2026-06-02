@@ -11,11 +11,15 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
-        $middleware->alias([
+
+    //merging multiple middleware into a group
+            // $middleware->appendToGroup('merge',[
+            //     AdminMiddleware::class,
+            //     Teacher\TeacherMiddleware::class,
+            // ]);
+
+        $middleware->alias([ //alias for middleware short name
             'admin.auth' => \App\Http\Middleware\AdminMiddleware::class,
-
-
             'teacher' => \App\Http\Middleware\Teacher\TeacherMiddleware::class,
         ]);
     })
