@@ -9,6 +9,9 @@ use App\Models\Attendance;
 use App\Services\Attendance\AttendanceService;
 use App\Services\Teacher\TeacherService;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
+
 
 class TeacherController extends Controller
 {
@@ -41,9 +44,13 @@ class TeacherController extends Controller
     }
 
 
-    public function update(UpdateTeacherRequest $request, string $id)
+    public function update(UpdateTeacherRequest $request,  $id)
     {
-     $this->teacherService->update($id, $request->validated());
+
+    $teacher = $this->teacherService->find($id);
+
+     $this->authorize('update', 'teacher');
+     $this->teacherService->update($request, $id);
      return redirect()->route('teacher.index')->with('success','Teacher updated successfully');
     }
 
