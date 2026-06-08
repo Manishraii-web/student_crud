@@ -1,0 +1,13 @@
+<?php
+
+namespace App\Policies;
+
+use App\Models\Student;
+use App\Models\Teacher;
+use App\Models\User;
+use Illuminate\Auth\Access\Response;
+
+class TeacherPolicy
+{
+   
+}

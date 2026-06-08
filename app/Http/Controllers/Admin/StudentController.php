@@ -59,6 +59,9 @@ class StudentController extends Controller
     //---------------------------------------------------------------------
     public function update(Request $request, $id)
     {
+        $student = $this->studentService->find($id);
+        $this->authorize('update', $student);
+
         $this->studentService->updateStudent($request, $id);
 
         return redirect()
