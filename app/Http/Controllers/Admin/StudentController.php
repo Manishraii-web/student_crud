@@ -7,12 +7,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\StudentRequest;
 use App\Http\Resources\StudentResource;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class StudentController extends Controller
 {
 
     public function __construct(protected StudentService $studentService) {}
     //---------------------------------------------------------------------
+    use AuthorizesRequests;
 
     public function index(Request $request)
     {
@@ -67,6 +69,10 @@ class StudentController extends Controller
 
     public function destroy( $id)
     {
+       $student =  $this->studentService->find($id);
+
+        $this->authorize('delete', $student);
+
         $this->studentService->deleteStudent($id);
 
         return redirect()
