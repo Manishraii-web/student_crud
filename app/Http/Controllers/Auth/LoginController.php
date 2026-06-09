@@ -1,52 +1,50 @@
 <?php
 
-namespace App\Http\Controllers\Attendance;
+namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Attendance\StoreAttendanceRequest;
-use App\Http\Requests\Attendance\UpdateAttendanceRequest;
-use App\Services\Attendance\AttendanceService;
 use Illuminate\Http\Request;
+use App\Services\AdminService;
+use App\Http\Controllers\Controller;
 
-class AttendanceController extends Controller
+class LoginController extends Controller
 {
-    public function __construct(protected AttendanceService $attendanceService){}
+    public function __construct(
+        protected AdminService $adminService
+    ) {}
 
-    public function index(){
-        $attendances = $this->attendanceService->getAll();
-        return view('attendance.index', compact('attendances'));
+    public function showLogin()
+    {
+        return view('auth.login');
     }
-    public function create(){
-        $data = $this->attendanceService->create();
-        return view('attendance.create', [
-            'students' => $data['students'],
-            'teachers'=> $data['teachers'],
+
+    public function login(Request $request)
+    {
+        $credentials = $request->only(
+            'email',
+            'password',
+        );
+
+        if ($this->adminService->login($credentials)) {
+
+            $request->session()->regenerate();
+
+            return redirect()
+                ->route('home');
+        }
+
+        return back()->withErrors([
+            'email' => 'Invalid credentials',
         ]);
     }
 
-    public function store(StoreAttendanceRequest $request){
-        $this->attendanceService->store($request->validated());
-        return redirect()->route('attendance.index')->with('success',"Marked Successfully");
-    }
+    public function logout(Request $request)
+    {
+        $this->adminService->logout();
 
-    public function edit($id){
-        $attendance = $this->attendanceService->find($id);
-        return view('attendance.edit', compact('attendance'));
-    }
+        $request->session()->invalidate();
 
-    public function show($id){
-        $attendance = $this->attendanceService->find($id);
-        return view('attendance.show', compact('attendance'));
-    }
+        $request->session()->regenerateToken();
 
-    public function update(UpdateAttendanceRequest $request, $id){
-        $this->attendanceService->update($id, $request->validated());
-        return redirect()->route('attendance.index')->with('success','Updated Successfull');
+        return redirect()->route('login');
     }
-
-    public function destroy($id){
-        $this->attendanceService->delete($id);
-        return redirect()->route('attendance.index')->with('success', 'Deleted Successfully');
-    }
-
 }
