@@ -30,8 +30,8 @@ class TeacherService
             $user->sendEmailVerificationNotification();
 
             return $user->teacherProfile()->create([
-                'phone'   => $data['phone'],
-                'subject' => $data['subject'],
+                'phone'   => $data['phone'] ?? null,
+                'subject' => $data['subject'] ?? null,
             ]);
         });
     }
