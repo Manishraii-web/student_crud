@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('teachers', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->string('phone');
-            $table->string('subject');
+            $table->string('phone')->nullable();
+            $table->string('subject')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

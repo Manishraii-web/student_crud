@@ -10,7 +10,7 @@ class TeacherPolicy
 {
     public function update(User $user, Teacher $teacher){
 
-    return $user->role= 'admin';
+    return $user->role==='admin';
     }
 }
 
