@@ -8,7 +8,7 @@
 
 <form
     method="POST"
-    action="{{ route('teacher.update', $teacher->id) }}"
+    action="{{ route('teacher.update', $teacher->user->id) }}"
 >
 
 @csrf
@@ -21,7 +21,7 @@
 <input
     type="text"
     name="name"
-    value="{{ old('name', $teacher->name) }}"
+    value="{{ old('name', $teacher->user->name) }}"
 >
 
 <br><br>
@@ -33,7 +33,7 @@
 <input
     type="email"
     name="email"
-    value="{{ old('email', $teacher->email) }}"
+    value="{{ old('email', $teacher->user->email) }}"
 >
 
 <br><br>
@@ -45,7 +45,7 @@
 <input
     type="text"
     name="phone"
-    value="{{ old('phone', $teacher->phone) }}"
+    value="{{ old('phone', $teacher->user->phone) }}"
 >
 
 <br><br>
@@ -57,7 +57,7 @@
 <input
     type="text"
     name="subject"
-    value="{{ old('subject', $teacher->subject) }}"
+    value="{{ old('subject', $teacher->user->subject) }}"
 >
 
 <br><br>

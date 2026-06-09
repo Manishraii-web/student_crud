@@ -1,74 +1,65 @@
 <?php
 
 namespace App\Services\Teacher;
+
 use App\Models\Teacher;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 
 class TeacherService
 {
-    /**
-     * Create a new class instance.
-     */
-    public function __construct(protected Teacher $teacher)
-    {  }
-     public function getAll(){
-        return $this->teacher->all();
+    public function __construct(protected Teacher $teacher) {}
+
+    public function getAll() {
+        return $this->teacher->with('user')->get();
     }
 
-    public function find($id){
-        return $this->teacher->findOrFail($id);
+    public function find($id) {
+        return $this->teacher->with('user')->findOrFail($id);
     }
 
-    public function store(array $data){
+    public function store(array $data) {
         return DB::transaction(function () use ($data) {
-            $data['password'] = Hash::make($data['password']);
+            $user = User::create([
+                'name'     => $data['name'],
+                'email'    => $data['email'],
+                'password' => $data['password'],   // 'hashed' cast handles it
+                'role'     => 'teacher',
+            ]);
 
-            $teacher = $this->teacher->create($data);
+            $user->sendEmailVerificationNotification();
 
-            User::create([
-                'name' => $teacher->name,
-                'email' => $teacher->email,
-                'password' => $data['password'],
-                'role' => 'teacher',
+            return $user->teacherProfile()->create([
+                'phone'   => $data['phone'],
+                'subject' => $data['subject'],
+            ]);
+        });
+    }
+
+    public function update($id, array $data) {
+        $teacher = $this->teacher->findOrFail($id);
+
+        return DB::transaction(function () use ($teacher, $data) {
+            $teacher->user->update([
+                'name'  => $data['name'],
+                'email' => $data['email'],
+            ]);
+
+            $teacher->update([
+                'phone'   => $data['phone'],
+                'subject' => $data['subject'],
             ]);
 
             return $teacher;
         });
     }
 
-    public function update($id, array $data){
-        $teacher = $this->teacher->findOrFail($id);
-        $oldEmail = $teacher->email;
-
-        return DB::transaction(function () use ($teacher, $oldEmail, $data) {
-            $updated = $teacher->update($data);
-
-            User::where('email', $oldEmail)
-                ->where('role', 'teacher')
-                ->update([
-                    'name' => $teacher->name,
-                    'email' => $teacher->email,
-                ]);
-
-            return $updated;
-        });
-    }
-
-    public function delete($id){
+    public function delete($id) {
         $teacher = $this->teacher->findOrFail($id);
 
         return DB::transaction(function () use ($teacher) {
-            User::where('email', $teacher->email)
-                ->where('role', 'teacher')
-                ->delete();
-
-            return $teacher->forceDelete();
+            $teacher->user->delete();   // cascade removes the teacher profile
+            return true;
         });
-
     }
-
-
-
 }

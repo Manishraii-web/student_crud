@@ -44,20 +44,20 @@
 
             <td>
 
-                <a href="{{ route('teacher.show', $teacher->id) }}">
+                <a href="{{ route('teacher.show', $teacher->user->id) }}">
                     Show
                 </a>
 
                 |
 
-                <a href="{{ route('teacher.edit', $teacher->id) }}">
+                <a href="{{ route('teacher.edit', $teacher->user->id) }}">
                     Edit
                 </a>
 
                 |
 
                 <form
-                    action="{{ route('teacher.destroy', $teacher->id) }}"
+                    action="{{ route('teacher.destroy', $teacher->user->id) }}"
                     method="POST"
                     style="display:inline;"
                 >

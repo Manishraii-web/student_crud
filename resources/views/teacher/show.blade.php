@@ -6,27 +6,27 @@
 
 <p>
     <strong>Name:</strong>
-    {{ $teacher->name }}
+    {{ $teacher->user->name }}
 </p>
 
 <p>
     <strong>Email:</strong>
-    {{ $teacher->email }}
+    {{ $teacher->user->email }}
 </p>
 
 <p>
     <strong>Phone:</strong>
-    {{ $teacher->phone }}
+    {{ $teacher->user->phone }}
 </p>
 
 <p>
     <strong>Subject:</strong>
-    {{ $teacher->subject }}
+    {{ $teacher->user->subject }}
 </p>
 
 <p>
     <strong>Created At:</strong>
-    {{ $teacher->created_at }}
+    {{ $teacher->user->created_at }}
 </p>
 
 <a href="{{ route('teacher.index') }}">

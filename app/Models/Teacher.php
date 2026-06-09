@@ -10,16 +10,14 @@ class Teacher extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'name',
-        'email',
+        'user_id',
         'phone',
-        'password',
         'subject'
     ];
 
-    protected $hidden = [
-        'password',
-    ];
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 
     public function attendance(){
         return $this->hasMany(Attendance::class);

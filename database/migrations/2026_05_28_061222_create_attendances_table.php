@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
-            $table->string('student_id');
-           $table->string('teacher_id');
+            $table->foreignId('student_id')->constrained()->cascadeOnDelete();
+           $table->foreignId('teacher_id')->nullable()->constrained()->cascadeOnDelete();
            $table->string('status');
            $table->date('date');
             $table->timestamps();

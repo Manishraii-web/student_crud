@@ -40,4 +40,8 @@ class User extends Authenticatable implements MustVerifyEmail
             'password' => 'hashed',
         ];
     }
+
+    public function teacherProfile(){
+        return $this->hasOne(Teacher::class);
+    }
 }
