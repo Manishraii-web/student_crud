@@ -50,7 +50,7 @@ class TeacherController extends Controller
     $teacher = $this->teacherService->find($id);
 
      $this->authorize('update', $teacher);
-     $this->teacherService->update($request->validated(), $id);
+     $this->teacherService->update( $id, $request->validated());
      return redirect()->route('teacher.index')->with('success','Teacher updated successfully');
     }
 

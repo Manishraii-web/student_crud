@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Teacher;
 
 use App\Models\Teacher;
-use App\Models\User;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -25,10 +24,7 @@ class UpdateTeacherRequest extends FormRequest
      */
     public function rules(): array
     {
-        $teacher = Teacher::find($this->route('teacher'));
-        $userId = $teacher
-            ? User::where('email', $teacher->email)->where('role', 'teacher')->value('id')
-            : null;
+        $userId = Teacher::find($this->route('teacher'))?->user_id;
 
         return [
            'name'=> 'required|string|max:50',

@@ -52,7 +52,7 @@
                 <td>
 
                     @if ($student->image)
-                        <img src="{{ asset('student-images/' . $student->image) }}" width="80">
+                        <img src="{{ asset('students-images/' . $student->image) }}" width="80">
                     @else
                         No Image
                     @endif
