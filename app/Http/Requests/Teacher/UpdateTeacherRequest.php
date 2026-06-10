@@ -33,9 +33,7 @@ class UpdateTeacherRequest extends FormRequest
         return [
            'name'=> 'required|string|max:50',
             'email'=> [
-                'required',
-                'email',
-                Rule::unique('teachers', 'email')->ignore($this->route('teacher')),
+                'required','email',
                 Rule::unique('users', 'email')->ignore($userId),
             ],
             'phone' => 'required|string|max:13',
