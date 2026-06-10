@@ -67,7 +67,7 @@
             value="{{ $teacher->id }}"
             {{ old('teacher_id') == $teacher->id ? 'selected' : '' }}
         >
-            {{ $teacher->name }}
+            {{ $teacher->user->name }}
         </option>
 
     @endforeach

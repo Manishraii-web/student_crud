@@ -17,7 +17,7 @@ class AttendanceService{
     public function create(){
         return [
             'students' => Student::all(),
-            'teachers' => Teacher::all(),
+            'teachers' => Teacher::with('user')->get(),
         ];
     }
 
