@@ -55,7 +55,6 @@ class StudentController extends Controller
         $student = $this->studentService->find($id);
         return view('admin.students.edit', compact('student'));
     }
-
     //---------------------------------------------------------------------
     public function update(Request $request, $id)
     {

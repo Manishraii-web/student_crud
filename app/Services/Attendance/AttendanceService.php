@@ -5,6 +5,7 @@ namespace App\Services\Attendance;
 use App\Models\Attendance;
 use App\Models\Student;
 use App\Models\Teacher;
+use Illuminate\Support\Facades\Auth;
 
 class AttendanceService{
 
@@ -17,11 +18,13 @@ class AttendanceService{
     public function create(){
         return [
             'students' => Student::all(),
-            'teachers' => Teacher::with('user')->get(),
+            // 'teachers' => Teacher::with('user')->get(),
         ];
     }
 
     public function store(array $data) {
+        $teacher = Teacher::where('user_id', Auth::id())->first();
+        $data['teacher_id'] = $teacher?->id;
      return $this->attendance->create($data);
     }
 

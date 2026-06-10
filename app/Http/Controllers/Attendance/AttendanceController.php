@@ -20,7 +20,6 @@ class AttendanceController extends Controller
         $data = $this->attendanceService->create();
         return view('attendance.create', [
             'students' => $data['students'],
-            'teachers'=> $data['teachers'],
         ]);
     }
 

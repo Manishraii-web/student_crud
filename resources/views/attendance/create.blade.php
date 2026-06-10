@@ -27,7 +27,7 @@
 @csrf
 
 <label>
-    Student
+    Student Names
 </label>
 
 <br>
@@ -49,37 +49,15 @@
 
 </select>
 
+
 <br><br>
-
-<label>
-    Teacher
-</label>
-
+<label>You are</label>
+<p>{{Auth::user()->name}} </p>
 <br>
-
-<select name="teacher_id">
-
-    <option value="">No Teacher</option>
-
-    @foreach ($teachers as $teacher)
-
-        <option
-            value="{{ $teacher->id }}"
-            {{ old('teacher_id') == $teacher->id ? 'selected' : '' }}
-        >
-            {{ $teacher->user->name }}
-        </option>
-
-    @endforeach
-
-</select>
-
-<br><br>
 
 <label>
     Status
 </label>
-
 <br>
 
 <select name="status" required>

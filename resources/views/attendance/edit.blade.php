@@ -10,7 +10,6 @@
     method="POST"
     action="{{ route('attendance.update', $attendance->id) }}"
 >
-
 @csrf
 @method('PUT')
 

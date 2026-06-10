@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -11,7 +13,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+       Gate::define('admin-func', function(User $user){
+        return $user->role ==='admin';
+       });
+
+       Gate::define('mark-attendance', function(User $user){
+        return in_array($user->role,['admin','teacher']);
+       });
     }
 
     /**
