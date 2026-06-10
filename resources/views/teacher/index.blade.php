@@ -34,9 +34,9 @@
 
             <td>{{ $teacher->id }}</td>
 
-            <td>{{ $teacher->name }}</td>
+            <td>{{ $teacher->user->name }}</td>
 
-            <td>{{ $teacher->email }}</td>
+            <td>{{ $teacher->user->email }}</td>
 
             <td>{{ $teacher->phone }}</td>
 
@@ -44,20 +44,20 @@
 
             <td>
 
-                <a href="{{ route('teacher.show', $teacher->user->id) }}">
+                <a href="{{ route('teacher.show', $teacher->id) }}">
                     Show
                 </a>
 
                 |
 
-                <a href="{{ route('teacher.edit', $teacher->user->id) }}">
+                <a href="{{ route('teacher.edit', $teacher->id) }}">
                     Edit
                 </a>
 
                 |
 
                 <form
-                    action="{{ route('teacher.destroy', $teacher->user->id) }}"
+                    action="{{ route('teacher.destroy', $teacher->id) }}"
                     method="POST"
                     style="display:inline;"
                 >
