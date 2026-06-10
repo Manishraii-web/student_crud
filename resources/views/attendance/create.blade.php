@@ -4,6 +4,9 @@
 @section('content')
 
 <h2>Mark Attendance</h2>
+@can('mark-attendance')
+    <a href="{{ route('attendance.create') }}">Mark Attendance</a>
+@endcan
 
 @if ($students->isEmpty())
     <p style="color:red;">Please add a student before marking attendance.</p>

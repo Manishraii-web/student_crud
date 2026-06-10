@@ -7,6 +7,7 @@ use App\Http\Requests\Attendance\StoreAttendanceRequest;
 use App\Http\Requests\Attendance\UpdateAttendanceRequest;
 use App\Services\Attendance\AttendanceService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class AttendanceController extends Controller
 {
@@ -17,6 +18,8 @@ class AttendanceController extends Controller
         return view('attendance.index', compact('attendances'));
     }
     public function create(){
+        Gate::authorize('mark-attendance');
+
         $data = $this->attendanceService->create();
         return view('attendance.create', [
             'students' => $data['students'],
