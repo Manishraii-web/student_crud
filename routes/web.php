@@ -7,6 +7,7 @@ use App\Http\Controllers\Attendance\AttendanceController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Support\Facades\Password;
 
 Route::get('/', function () {
     return redirect()->route('home');
@@ -61,3 +62,30 @@ Route::post('/email/verification-notification', function(Request $request){
     $request->user()->sendEmailVerificationNotification();
     return back()->with('message', 'Verification link sent');
 })->middleware(['auth','throttle:6,1'])->name('verification.send');
+
+
+//for password reset
+Route::middleware('guest')->group(function (){
+
+Route::get('forgot-password', function(){
+    return view('auth.forgot-password');
+})->name('password.request');
+
+
+Route::post('forgot-password', function(Request $request){
+    $request->validate(['email'=>'required|email']);
+
+    $status = Password::sendResetLink(
+        $request->only('email')
+    );
+    return $status === Password::ResetLinkSent ?
+       back()->with(['status' => __($status)]) :
+       back()->withErrors(['email' => __($status)]);
+})->name('password.email');
+
+
+Route::get('/reset-password/{token}', function(string $token){
+    return view('auth.reset-password', ['token'=> $token]);
+})->name('password.reset');
+
+ });
