@@ -27,6 +27,10 @@ class AttendanceController extends Controller
     }
 
     public function store(StoreAttendanceRequest $request){
+        if(!Gate::allows('mark-attendance')){
+            return redirect()->route('attendance.index')->with('error','You cant Mark Attendance.');
+
+        }
         $this->attendanceService->store($request->validated());
         return redirect()->route('attendance.index')->with('success',"Marked Successfully");
     }
@@ -47,6 +51,9 @@ class AttendanceController extends Controller
     }
 
     public function destroy($id){
+       if(! Gate::allows('admin-func')){
+        return redirect()->route('attendance.index')->with('error','Only Admin can');
+       }
         $this->attendanceService->delete($id);
         return redirect()->route('attendance.index')->with('success', 'Deleted Successfully');
     }

@@ -13,13 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-       Gate::define('admin-func', function(User $user){
-        return $user->role ==='admin';
-       });
 
-       Gate::define('mark-attendance', function(User $user){
-        return in_array($user->role,['admin','teacher']);
-       });
     }
 
     /**
@@ -27,6 +21,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Gate::define('admin-func', function(User $user){
+        return $user->role ==='admin';
+       });
+
+       Gate::define('mark-attendance', function(User $user){
+        return in_array($user->role,['admin','teacher']);
+       });
     }
 }
